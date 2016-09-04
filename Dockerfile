@@ -1,5 +1,5 @@
 FROM debian:jessie
-MAINTAINER Jan Broer <janeczku@yahoo.de>
+MAINTAINER Kenneth Wang Pedersen <kenneth@wangpedersen.com>
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Following 'How do I add or remove Dropbox from my Linux repository?' - https://www.dropbox.com/en/help/246
