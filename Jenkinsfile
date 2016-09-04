@@ -1,4 +1,5 @@
 def image = 'dropbox'
+def serviceName = image
 def registry = 'https://registry.wangpedersen.com'
 def registryLogin = 'registry-login'
 
