@@ -4,7 +4,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 COPY dropbox_2015.10.28_amd64.deb /tmp/dropbox.deb
 
-RUN apt install /tmp/dropbox.deb
+RUN apt update && apt install -y /tmp/dropbox.deb
 RUN apt-get -qqy update \
 	# Note 'ca-certificates' dependency is required for 'dropbox start -i' to succeed
 	&& apt-get -qqy install ca-certificates curl dropbox python-gpgme \
