@@ -2,12 +2,10 @@ FROM debian:stretch
 MAINTAINER Kenneth Wang Pedersen <kenneth@wangpedersen.com>
 ARG DEBIAN_FRONTEND=noninteractive
 
-# Following 'How do I add or remove Dropbox from my Linux repository?' - https://www.dropbox.com/en/help/246
-RUN echo 'deb http://linux.dropbox.com/debian stretch main' > /etc/apt/sources.list.d/dropbox.list \
-  && apt-get -qqy update \
-	&& apt-get -qqy install gnupg \
-	&& apt-key adv --keyserver pgp.mit.edu --recv-keys 1C61A2656FB57B7E4DE0F4C1FC918B335044912E \
-	&& apt-get -qqy update \
+COPY dropbox_2015.10.28_amd64.deb /tmp/dropbox.deb
+
+RUN dpkg -i /tmp/dropbox.deb
+RUN apt-get -qqy update \
 	# Note 'ca-certificates' dependency is required for 'dropbox start -i' to succeed
 	&& apt-get -qqy install ca-certificates curl dropbox python-gpgme \
 	# Perform image clean up.
