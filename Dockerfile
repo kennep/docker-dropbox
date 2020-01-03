@@ -1,13 +1,15 @@
-FROM debian:stretch
+FROM debian:buster
 MAINTAINER Kenneth Wang Pedersen <kenneth@wangpedersen.com>
 ARG DEBIAN_FRONTEND=noninteractive
 
-COPY dropbox_2015.10.28_amd64.deb /tmp/dropbox.deb
+COPY dropbox_2019.02.14_amd64.deb /tmp/dropbox.deb
 
-RUN apt update && apt install -y /tmp/dropbox.deb
 RUN apt-get -qqy update \
-	# Note 'ca-certificates' dependency is required for 'dropbox start -i' to succeed
-	&& apt-get -qqy install ca-certificates curl dropbox python-gpgme \
+	&& apt-get install -qqy /tmp/dropbox.deb \
+        && apt-get install -qqy gnupg \
+        && apt-key adv --keyserver hkp://pgp.mit.edu --recv-keys FC918B335044912E \
+        # Note 'ca-certificates' dependency is required for 'dropbox start -i' to succeed
+	&& apt-get -qqy install ca-certificates curl dropbox python3-gpg libatomic1 expect \
 	# Perform image clean up.
 	&& apt-get -qqy autoclean \
 	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
@@ -19,7 +21,7 @@ RUN apt-get -qqy update \
 # start -i'. So we switch to 'dropbox' user temporarily and let it do its thing.
 USER dropbox
 RUN mkdir -p /dbox/.dropbox /dbox/.dropbox-dist /dbox/Dropbox /dbox/base \
-	&& echo y | dropbox start -i
+	&& yes | unbuffer -p dropbox start -i
 
 # Switch back to root, since the run script needs root privs to chmod to the user's preferrred UID
 USER root
