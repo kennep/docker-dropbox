@@ -21,7 +21,7 @@ RUN apt-get -qqy update \
 # start -i'. So we switch to 'dropbox' user temporarily and let it do its thing.
 USER dropbox
 RUN mkdir -p /dbox/.dropbox /dbox/.dropbox-dist /dbox/Dropbox /dbox/base \
-	&& echo y | unbuffer -p dropbox start -i
+	&& (sleep 1 && echo y) | unbuffer -p dropbox start -i
 
 # Switch back to root, since the run script needs root privs to chmod to the user's preferrred UID
 USER root
