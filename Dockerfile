@@ -9,7 +9,7 @@ RUN apt-get -qqy update \
         && apt-get install -qqy gnupg \
         && apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-keys FC918B335044912E \
         # Note 'ca-certificates' dependency is required for 'dropbox start -i' to succeed
-	&& apt-get -qqy install ca-certificates curl dropbox python3-gpg libatomic1 expect \
+	&& apt-get -qqy install ca-certificates curl dropbox python3-gpg libatomic1 libglapi-mesa expect \
 	# Perform image clean up.
 	&& apt-get -qqy autoclean \
 	&& rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
